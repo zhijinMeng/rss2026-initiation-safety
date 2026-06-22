@@ -1,23 +1,12 @@
-Safety for generalist robots is broader than constraint enforcement.
-We argue it must include initiation authorization: deciding whether
-the robot may commit its first irreversible social act under
-uncertainty, by speech, reach, or approach. On many platforms the
-harmful act is that first commitment, not a collision. Mapping
-context, intent, and preference to pre-commitment decisions shows
-why passive thresholds and end-to-end VLAs are structurally misaligned
-with generalist deployment
-\citep{rt2-2023,zhang2025safevla,ravichandran2025roboguard}.
-
-The \textsc{pas} prototype implements the framing with a runtime split
-between reversible probes, an authorization gate, and downstream
-generation. Our study measures whether that split changes margin
-distributions and user-reported awkwardness. If initiation
-authorization becomes a peer topic to physical safety, reference
-architectures should treat first-commit decisions as logged, tunable
-objects separable from dialogue or motion planning. Benchmarks should
-include latent receptivity, not only fluent continuation after a
-channel is open. Red-teaming should cover embodied cold-start, where
-jailbreaks surface as harmful first moves rather than toxic
-mid-dialogue replies \citep{robey2024jailbreaking,kojima2025fmr}.
-Naming the gap changes what ``safe generalist robot'' must mean as
-these systems move into public and domestic space.
+Generalist-robot safety should ask one more question before motion or
+dialogue safety kick in: should the robot take its first hard-to-undo
+social action now? We call that \emph{initiation authorization}. In
+practice, harm often comes from speaking or reaching too soon---for
+example, greeting someone who is on a phone---rather than from a
+collision. A robot can be collision-free and still feel unsafe at first
+contact. Our \textsc{pas} prototype enforces this with reversible
+probes, an authorization gate, and only then dialogue generation. An
+ongoing study ($n{=}90$) tests whether that split changes margin
+distributions and reported awkwardness. As these robots enter public and
+home settings, treating initiation as a safety layer changes what
+``safe generalist robot'' must mean.

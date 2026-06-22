@@ -1,45 +1,48 @@
 Generalist-robot safety must include \emph{initiation
-authorization}: deciding whether a robot may commit its first
-irreversible social act under uncertainty. An engagement score
-measures apparent receptivity. It does not answer whether the robot
-should commit that first act when the signal is ambiguous
-\citep{rich2010,salam2017,broek2024proactive,shi2011spatial}.
+authorization}: deciding whether a robot may take its first
+hard-to-undo social action when the situation is still unclear. An
+engagement score measures how receptive someone seems. It does not
+answer whether the robot should act when that signal is ambiguous
+\citep{rich2010,broek2024proactive,shi2011spatial}.
 
 Deployed stacks often collapse three distinct safety decisions into
-one pipeline. \emph{Physical safety} constrains motion---collision,
-force, joint limits \citep{zhang2025safevla,kojima2025fmr}.
+one pipeline. \emph{Physical safety} limits motion---collisions,
+force, joint limits \citep{zhang2025safevla}.
 \emph{Social-interaction safety} governs how the robot behaves once
-interaction has started
-\citep{akalin2021,weiss2023perceived,tian2021socialerrors}.
+interaction has already started
+\citep{akalin2021,tian2021socialerrors}.
 \emph{Initiation authorization} governs whether to start at all and
-is largely absent from reference architectures. The harm often appears
-as an ordinary first move: a mistimed greeting that interrupts a call
+is largely missing from standard designs. The harm often looks like an
+ordinary first move: a mistimed greeting that interrupts a call
 \citep{edirisinghe2024shopworker}, or an end-to-end VLA that reaches
-for a contested object before assent
-\citep{rt2-2023,openvla-2024,black2024pi0}.
+for an object before the person has agreed
+\citep{openvla-2024}. A jailbroken planner can
+authorize a harmful first move as readily as a harmful first word
+\citep{robey2024jailbreaking}.
 
 Most deployed stacks treat initiation as a fixed threshold:
 $\textsc{act/speak} \Leftrightarrow e_t > \theta$
 \citep{bohus2014}. That treats an engagement score, or a single VLA
-rollout, as social permission, with no context, no preference, and
-no evidence from low-cost probes
-\citep{skantze2014speech,vasquez2014,bohus2014}.
+rollout, as permission to act, with no context, no user preference,
+and no evidence from low-cost probes
+\citep{skantze2014speech,bohus2014}.
 Figure~\ref{fig:initiation} contrasts this passive threshold with
-initiation safety as \emph{safety-by-practice}: reversible probes
-before any irreversible commitment, explicit risk posture, and
-runtime shields before foundation-model dialogue.
+\textsc{pas} (probe--authorize--speak): small reversible probes
+before any hard-to-undo action, an explicit bold/conservative setting,
+and runtime checks before foundation-model dialogue.
 
 \input{text/figure1}
 
 Building on this distinction, we make three contributions:
 \begin{enumerate}
 \item We name \emph{initiation authorization} as a distinct safety
-layer, separate from physical shields, post-plan VLA guardrails, and
-engagement optimization.
+layer, separate from physical shields, post-plan VLA guardrails,
+post-dialogue preference alignment, and engagement optimization.
 \item We sketch \textsc{pas} (probe--authorize--speak) on a physical
 robot and propose an evaluation protocol that compares three
-initiation policies with explicit falsifiers.
-\item We pose open questions on metrics, deployment logging,
-governance, and the boundary between initiation and foundation-model
-generation.
+initiation policies and states how the framing could fail.
+\item We outline future work, pose open questions for the community,
+and offer provisional statements on metrics, deployment logging,
+governance, and where initiation ends and foundation-model generation
+begins.
 \end{enumerate}

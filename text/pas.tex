@@ -1,79 +1,101 @@
-We instantiate this initiation shield as \textsc{pas}
-(Probe--Authorize--Speak) on SocialVLA-Engage.
+We implement initiation authorization as \textsc{pas}
+(probe--authorize--speak) on SocialVLA-Engage. The controller runs at
+10\,Hz and keeps one design rule: \textbf{probes never speak}. Only the
+authorization gate may release the first \textsc{speak}; the
+foundation-model dialogue stack runs after that point.
+
+\paragraph{Runtime split.} Each cycle has three steps.
+\textbf{(1) Perception} tracks visible people and fuses gaze, speech
+activity, approach, and dwell into an engagement score $e_t$.
+\textbf{(2) Probe FSM} chooses a reversible nonverbal action---
+\texttt{wait}, \texttt{head\_turn}, or \texttt{body\_orient}---based on
+human cues. Stages advance with brief gaze, sustained gaze, and dwell;
+they can de-escalate if the person looks away.
+The FSM never returns \texttt{speak}. Stages do not skip forward, and
+gaze loss can de-escalate:
+\begin{center}
+\small
+\begin{tabular}{cll}
+\toprule
+\textbf{Stage} & \textbf{Human cue} & \textbf{Probe output} \\
+\midrule
+0 & person present & \texttt{wait} \\
+1 & brief gaze toward robot & \texttt{head\_turn} \\
+2 & sustained gaze + approach & \texttt{body\_orient} \\
+3 & extended dwell & \texttt{body\_orient} (hold) \\
+\bottomrule
+\end{tabular}
+\end{center}
+\textbf{(3) Authorization gate} opens first speech only when
+$e_t \geq \tau(\rho)$ and probe stage $\geq 2$, where $\tau(\rho)$ is
+set by the venue bold/conservative dial $\rho$. The system logs the
+margin $\Delta_{\text{init}} = e_t - \tau(\rho)$ at first
+\textsc{speak}.
 
 \begin{algorithm}[h]
-\caption{Initiation authorization loop}
+\caption{PAS initiation loop (10\,Hz)}
 \small
 \begin{algorithmic}[1]
-\State \textbf{Input:} cues $e_t$, probe history, venue risk posture
-\State \textbf{Invariant:} probe module $\not\to$ \textsc{speak}
-\If{authorization gate closed}
-  \State emit reversible probe or wait, then update receptivity evidence
-\ElsIf{gate open}
-  \State permit FM dialogue / first \textsc{speak} and log decision margin
+\State \textbf{Input:} frame, stage, $\rho$
+\State $e_t \leftarrow \text{engagement\_score}()$;\;
+  $\tau \leftarrow \tau(\rho)$
+\State $a_t \leftarrow \text{probe\_fsm}(e_t,\text{stage})$
+\Comment{never \textsc{speak}}
+\If{$e_t \geq \tau$ \textbf{and} stage $\geq 2$}
+  \State $a_t \leftarrow$ \textsc{speak}; log $\Delta_{\text{init}} = e_t - \tau$;\;
+  run FM dialogue
 \EndIf
 \end{algorithmic}
 \end{algorithm}
 
-\paragraph{Runtime data flow.} Each cycle, perception updates
-engagement cues \citep{rich2010,salam2017}.
-The probe module emits only reversible nonverbal actions
-(\texttt{wait}, \texttt{head}, \texttt{orient}) and is prevented
-from emitting \texttt{speak}.
-Evidence accumulates from how the person responds
-\citep{skantze2014speech,bohus2014}.
-The authorization gate is the sole path to \texttt{speak}, so even
-high $e_t$ does not produce speech if the gate is closed.
-Only after authorization does a foundation-model dialogue stack run.
-Passive direct-init ($e_t > \theta$) bypasses this split and can
-speak when refraining is socially safer. Any architecture
-enforcing probe~$\to$~authorize~$\to$~act would instantiate the
-same principles.
+\paragraph{What the study changes.} All conditions share the same
+humanoid, perception stack, doorway scenario, and post-initiation
+dialogue. Only the initiation layer differs:
+\textsc{pas} uses the full probe--gate split with default $\rho$;
+direct-init maps $e_t > \theta$ directly to \textsc{speak}, skipping
+probes and the gate;
+passive-wait keeps probes but uses a conservative $\rho$ so the gate
+rarely opens.
 
-\paragraph{Study scenario.} Participants encounter a humanoid at a
-scripted doorway. The visitor may be on a phone, mid-conversation,
-or clearly receptive \citep{edirisinghe2024shopworker}. Each session
-logs probe history, gate state, and the timestamp of first
-\textsc{speak}, supporting mechanistic and subjective comparison
-across arms.
+\paragraph{Study scenario.} Participants meet the robot at a scripted
+doorway. Each trial scripts one of three visitor states: on a phone,
+mid-conversation, or clearly open to interaction. Sessions log probe actions, gate
+state, stage, $\Delta_{\text{init}}$ at first \textsc{speak}, and
+user-reported awkwardness, success, and naturalness.
 
 \subsection{Evaluation Protocol}
 
-We evaluate three initiation policies in a between-subjects study
-($n{=}90$, ethics-approved). All three arms share hardware, the same
-perception stack, and the same post-initiation dialogue stack. Only
-the initiation policy differs:
+We compare these three policies in a between-subjects study
+($n{=}90$, ethics-approved):
 
 \begin{center}
 \small
 \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}>{\raggedright\arraybackslash}p{0.28\columnwidth}>{\raggedright\arraybackslash}p{0.66\columnwidth}@{}}
 \toprule
-\textbf{Condition} & \textbf{Policy class} \\
+\textbf{Condition} & \textbf{What it does} \\
 \midrule
-\textsc{pas} & Probes + authorization gate (default risk posture) \\
+\textsc{pas} & Probes + gate (default $\rho$) \\
 \midrule
-Direct-init & $e_t > \theta$, no probes \\
+Direct-init & $e_t > \theta$, no probes or gate \\
 \midrule
-Passive-wait & Probes + conservative gate (rarely speak) \\
+Passive-wait & Probes + gate with conservative $\rho$ \\
 \bottomrule
 \end{tabular*}
 \end{center}
 
-\paragraph{Endpoints.} \emph{Mechanistic:} distribution of the
-speak-margin proxy at first speak ($\Delta b_{\text{init}}$),
-comparing \textsc{pas} with direct-init. \emph{User-reported:}
-conversation success, awkwardness, and naturalness on 7-point
-Likert scales. \emph{Deployment:} risk-posture sweep on
-\textsc{pas} without retraining perception.
+\paragraph{Endpoints.} \emph{System-level:} distribution of
+$\Delta_{\text{init}}$ at first \textsc{speak}, comparing \textsc{pas}
+with direct-init. \emph{User-reported:} conversation success,
+awkwardness, and naturalness on 7-point Likert scales.
+\emph{Deployment:} sweep $\rho$ on \textsc{pas} without retraining
+perception.
 
-\paragraph{Falsifiers.} The framing is testable: if \textsc{pas} and
-direct-init produce indistinguishable margin distributions, the
-architectural split adds little.
+\paragraph{Ways the framing could fail.} The claim is testable: if
+\textsc{pas} and direct-init produce the same $\Delta_{\text{init}}$
+distributions, the probe--gate split adds little.
 If awkwardness does not track margin alignment, felt safety likely
-needs metrics beyond timing proxies
-\citep{tian2021socialerrors}.
-If risk-posture settings do not monotonically trade initiation rate
-against margin, deployment-time authorization is not a viable safety
-dial.
-The study measures whether initiation authorization is manipulable
-and whether margin distributions differ across policy classes.
+needs metrics beyond timing proxies.
+If sweeping $\rho$ does not trade speaking rate against margin in a
+clear way, tunable authorization is not a useful deploy-time dial.
+The study tests whether initiation authorization can be tuned and
+whether margins differ across policies.
