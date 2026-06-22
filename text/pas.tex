@@ -1,8 +1,14 @@
 We implement initiation authorization as \textsc{pas}
-(probe--authorize--speak) on SocialVLA-Engage. The controller runs at
-10\,Hz and keeps one design rule: \textbf{probes never speak}. Only the
-authorization gate may release the first \textsc{speak}; the
-foundation-model dialogue stack runs after that point.
+(probe--authorize--speak) on SocialVLA-Engage. \textsc{pas} deliberately
+uses familiar HRI primitives---an engagement score, a probe FSM, and a
+threshold gate \citep{bohus2014,skantze2014speech,rich2010}. The
+contribution is architectural, not mechanistic: arranging these parts as
+a safety layer with (i) a probe module structurally prevented from
+emitting \textsc{speak}, (ii) a gate threshold $\tau(\rho)$ that is a
+deploy-time dial rather than a fixed trained constant, and (iii) a
+logged margin $\Delta_{\text{init}}$ at every first-\textsc{speak}
+event. The controller runs at 10\,Hz; only the authorization gate may
+release first speech, and dialogue generation runs after that point.
 
 \paragraph{Runtime split.} Each cycle has three steps.
 \textbf{(1) Perception} tracks visible people and fuses gaze, speech
@@ -48,6 +54,18 @@ margin $\Delta_{\text{init}} = e_t - \tau(\rho)$ at first
 \end{algorithmic}
 \end{algorithm}
 
+\paragraph{What is different from engagement-based initiation.}
+Prior engagement-based initiators emit speech once the score crosses a
+tuned threshold \citep{bohus2014,rich2010}. \textsc{pas} makes three
+changes that prior work does not separate or log. First, the probe
+module is structurally prevented from emitting \textsc{speak}---the
+safety property is enforced in the controller, not left to a learned
+policy. Second, $\tau(\rho)$ is a deploy-time dial: the same perception
+stack can support a conservative museum setting and a bolder retail demo
+without retraining. Third, the system logs $\Delta_{\text{init}}$ at
+every first-\textsc{speak} event, making initiation decisions auditable
+after incidents.
+
 \paragraph{What the study changes.} All conditions share the same
 humanoid, perception stack, doorway scenario, and post-initiation
 dialogue. Only the initiation layer differs:
@@ -59,9 +77,12 @@ rarely opens.
 
 \paragraph{Study scenario.} Participants meet the robot at a scripted
 doorway. Each trial scripts one of three visitor states: on a phone,
-mid-conversation, or clearly open to interaction. Sessions log probe actions, gate
-state, stage, $\Delta_{\text{init}}$ at first \textsc{speak}, and
-user-reported awkwardness, success, and naturalness.
+mid-conversation, or clearly open to interaction. This study
+instantiates the framing for doorway speech; reach, approach, and
+multi-party authorization are deferred to future work (\S\ref{sec:futurework}).
+Sessions log probe actions, gate state, stage, $\Delta_{\text{init}}$ at
+first \textsc{speak}, and user-reported awkwardness, success, and
+naturalness.
 
 \subsection{Evaluation Protocol}
 
