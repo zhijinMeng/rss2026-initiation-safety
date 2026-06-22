@@ -1,57 +1,67 @@
-\label{sec:open}
+\subsection{Where Initiation Matters Most}
 
-This framing aligns with several CFP themes---\emph{safety guardrails} for
-generalist policies, \emph{perceptions of safety in HRI}, \emph{safe physical
-HRI} \citep{hu2022sharp}, \emph{robot jailbreaking}, and
-\emph{benchmarks/evaluation}---while arguing that initiation authorization is a
-missing layer in generalist-robot safety taxonomies, not a social-robot niche
-concern.
-Below we pose open questions and three provisional statements for community
-adoption, revision, or rejection.
+In retail, a premature greeting can interrupt a call or transactional
+flow \citep{edirisinghe2024shopworker}. In homes, a generalist may
+speak across an ongoing conversation. In shared labs or museums, the
+same orienting move that signals availability in a demo can read as
+intrusive off-hours. These scenes differ in context but share one
+structure: the robot commits before it knows who is willing to be
+addressed \citep{shi2011spatial,vasquez2014}.
 
-\paragraph{Taxonomy and measurement.}
-Should ``premature commitment'' appear explicitly under social-interaction
-safety in reference architectures---rather than as an afterthought of engagement
-metrics?
-What minimum metric set (awkwardness, interruption events, addresser accuracy,
-logged margins) could compare platforms across venues?
-Do we need a shared initiation-safety benchmark, or are venue-specific studies
-sufficient?
+\subsection{Open Questions}
 
-\paragraph{Preference and governance.}
-Who should set social risk posture---operator, user, online inference, or
-regulation?
-Can specialist norms unify under generalist robots, or do we need domain-specific
-safety cases?
-How should standards handle dense, multicultural, or multi-party scenes without
-freezing robots into permanent passive-wait?
+\paragraph{Measurement and standards.} Should premature commitment
+appear explicitly under social-interaction safety in reference
+architectures, or stay an afterthought of engagement metrics? What
+minimum metric set (awkwardness, interruption events, addressee
+accuracy, logged margins) lets us compare platforms across venues?
+Do we need a shared initiation-safety benchmark with scripted
+latent-receptivity conditions, or are venue-specific studies
+enough? Without cold-start metrics, a platform can look safe on
+average while still producing frequent harmful first words in the
+scenes where initiation actually occurs \citep{weiss2023perceived}.
 
-\paragraph{Foundation models and layering.}
-If dialogue FMs improve fluency but not timing, where is the hard boundary
-between generative planning and runtime shields \citep{ravichandran2025roboguard}?
-What failures (hallucinated addressee, jailbroken greeting, over-talkative
-initiation) appear only when initiation and generation are merged?
-What red-team protocols apply to embodied cold-start that text-only evaluation
-misses \citep{robey2024jailbreaking}?
-Which initiation guarantees require runtime practice regardless of FM scale?
+\paragraph{Preference and governance.} Who sets social risk
+posture: operator, user, online inference, or regulator? Can
+specialist norms unify under generalist robots, or do we need
+domain-specific safety cases? How should standards handle dense,
+multicultural, or multi-party scenes without forcing robots into
+permanent passive-wait? A home user may want proactive help, while
+a clinic may require conservative initiation. Generalist stacks need
+a dial that is legible to operators and auditable after incidents,
+not a single threshold baked into model weights
+\citep{liu2025embodied}.
 
-\paragraph{Statement 1: Initiation is safety-critical.}
-For social generalist robots, \emph{when} to open a social channel is not a UX
-polish layer.
-It is a safety decision about irreversible commitment---analogous in structure,
-if not in physics, to the workshop's context-dependent knife or egg examples.
+\paragraph{Foundation models and layering.} If dialogue FMs improve
+fluency but not timing, where is the hard boundary between
+generative planning and runtime shields
+\citep{ravichandran2025roboguard}? Which failures (hallucinated
+addressee, jailbroken greeting, over-talkative initiation) appear
+only when initiation and generation are merged? What red-team
+protocols apply to embodied cold-start that text-only evaluation
+misses \citep{robey2024jailbreaking}? Which initiation guarantees
+require runtime practice regardless of FM scale? End-to-end VLAs
+\citep{rt2-2023,openvla-2024,black2024pi0} make this boundary
+urgent because a single rollout can couple perception, commitment,
+and action.
 
-\paragraph{Statement 2: Irreversible acts need explicit authorization.}
-Starting speech, naming a user, or beginning biometric capture should not flow
-unchecked from a single engagement score or an end-to-end VLA.
-Authorization logic---runtime gates, probes, auditable margins---belongs in
-reference architectures alongside motion-planning shields.
+\subsection{Statements}
 
-\paragraph{Statement 3: Auditable initiation logs should be a deployment prerequisite.}
-Generalist-robot safety standards should require logged initiation decisions---
-probe history, authorization margins, and first-commit timestamps---analogous
-to incident logs in aviation.
-Without auditable cold-start traces, post-hoc ``felt unsafe'' reports cannot
-improve authorization policy after a harmful first word or first grasp.
-We invite counterexamples from manipulation-centric generalists and alternative
-metrics for first-commit harm.
+\paragraph{Statement 1: Initiation is safety-critical.} For social
+generalists, deciding when to open a channel is a safety decision
+about irreversible commitment, analogous in structure, if not in
+physics, to context-dependent knife or egg examples.
+
+\paragraph{Statement 2: Irreversible acts need explicit
+authorization.} Starting speech, naming a user, or beginning
+biometric capture should not flow unchecked from a single
+engagement score or an end-to-end VLA. Authorization
+logic---runtime gates, probes, auditable margins---belongs in
+reference architectures alongside motion shields.
+
+\paragraph{Statement 3: Initiation logs should be a deployment
+prerequisite.} Generalist-robot safety standards should require
+logged initiation decisions (probe history, authorization margins,
+first-commit timestamps), analogous to incident logs in aviation.
+Without auditable cold-start traces, ``felt unsafe'' reports cannot
+improve policy after a harmful first word or first grasp.

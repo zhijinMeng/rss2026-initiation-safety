@@ -1,78 +1,79 @@
-\label{sec:pas}
+We instantiate this initiation shield as \textsc{pas}
+(Probe--Authorize--Speak) on SocialVLA-Engage.
 
-\textbf{This section is illustrative, not the main claim.}
-Section~\ref{sec:taxonomy} argues for a missing safety layer; here we show only
-that the principles are \emph{implementable} on a physical platform
-(SocialVLA-Engage, running at 10\,Hz) using \textbf{PAS}
-(\emph{Probe--Authorize--Speak}).
-
-\paragraph{Runtime data flow.}
-Each control cycle: perception updates engagement cues
-\citep{rich2010,salam2017}; the \emph{probe} module emits only reversible
-nonverbal actions (\texttt{wait}, \texttt{head}, \texttt{orient}) and never
-\texttt{speak}; evidence accumulates from probe responses
-\citep{skantze2014speech,bohus2014}; the \emph{authorization gate} is the sole
-speak path; only after authorization does a foundation-model dialogue stack run.
-Passive direct-init ($e_t > \theta$) bypasses this split and can speak when
-refraining is socially safer.
-Any architecture enforcing probe $\rightarrow$ authorize $\rightarrow$ act would
-serve the same pedagogical role.
-
-\begin{algorithm}[!htb]
-\caption{Initiation authorization loop (10\,Hz sketch)}
-\label{alg:pas}
+\begin{algorithm}[h]
+\caption{Initiation authorization loop}
 \small
 \begin{algorithmic}[1]
-\STATE \textbf{Input:} cues $e_t$, probe history, venue risk posture
-\STATE \textbf{Invariant:} probe module $\not\rightarrow$ \texttt{speak}
-\IF{authorization gate closed}
-  \STATE emit reversible probe or \texttt{wait}; update receptivity evidence
-\ELSIF{gate open}
-  \STATE permit FM dialogue / first \texttt{speak}; log decision margin
-\ENDIF
+\State \textbf{Input:} cues $e_t$, probe history, venue risk posture
+\State \textbf{Invariant:} probe module $\not\to$ \textsc{speak}
+\If{authorization gate closed}
+  \State emit reversible probe or wait, then update receptivity evidence
+\ElsIf{gate open}
+  \State permit FM dialogue / first \textsc{speak} and log decision margin
+\EndIf
 \end{algorithmic}
 \end{algorithm}
 
+\paragraph{Runtime data flow.} Each cycle, perception updates
+engagement cues \citep{rich2010,salam2017}.
+The probe module emits only reversible nonverbal actions
+(\texttt{wait}, \texttt{head}, \texttt{orient}) and is prevented
+from emitting \texttt{speak}.
+Evidence accumulates from how the person responds
+\citep{skantze2014speech,bohus2014}.
+The authorization gate is the sole path to \texttt{speak}, so even
+high $e_t$ does not produce speech if the gate is closed.
+Only after authorization does a foundation-model dialogue stack run.
+Passive direct-init ($e_t > \theta$) bypasses this split and can
+speak when refraining is socially safer. Any architecture
+enforcing probe~$\to$~authorize~$\to$~act would instantiate the
+same principles.
+
+\paragraph{Study scenario.} Participants encounter a humanoid at a
+scripted doorway. The visitor may be on a phone, mid-conversation,
+or clearly receptive \citep{edirisinghe2024shopworker}. Each session
+logs probe history, gate state, and the timestamp of first
+\textsc{speak}, supporting mechanistic and subjective comparison
+across arms.
+
 \subsection{Evaluation Protocol}
 
-This is a \textbf{position and design submission}.
-Quantitative outcomes from an ongoing between-subjects study ($n{=}90$, three
-policy classes, ethics-approved) are \textbf{in progress}.
-Rethinking Safety explicitly welcomes in-progress work; our goal is not
-placeholder effect sizes but whether initiation authorization deserves a place in
-generalist-robot safety discourse.
-Empirical numbers will test the sketch; they do not define the framing.
-All arms share hardware, a 10\,Hz perception loop, and the same post-initiation
-dialogue stack; only initiation policy differs:
+We evaluate three initiation policies in a between-subjects study
+($n{=}90$, ethics-approved). All three arms share hardware, the same
+perception stack, and the same post-initiation dialogue stack. Only
+the initiation policy differs:
+
 \begin{center}
-\scriptsize
-\begin{tabular}{@{}l p{0.62\linewidth}@{}}
+\small
+\begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}>{\raggedright\arraybackslash}p{0.28\columnwidth}>{\raggedright\arraybackslash}p{0.66\columnwidth}@{}}
 \toprule
 \textbf{Condition} & \textbf{Policy class} \\
 \midrule
-PAS & Probes + authorization gate (default risk posture) \\
-Direct-init & $e_t > \theta$; no probes \\
+\textsc{pas} & Probes + authorization gate (default risk posture) \\
+\midrule
+Direct-init & $e_t > \theta$, no probes \\
+\midrule
 Passive-wait & Probes + conservative gate (rarely speak) \\
 \bottomrule
-\end{tabular}
+\end{tabular*}
 \end{center}
 
-\paragraph{Endpoints.}
-\textbf{Mechanistic:} distribution of speak-margin proxy at first
-\texttt{speak} ($\widehat{\Delta}_{\text{init}}$), comparing PAS vs.\
-direct-init.
-\textbf{User-reported:} conversation success, awkwardness, and naturalness
-(7-point Likert).
-\textbf{Deployment:} risk-posture sweep on PAS without retraining perception.
+\paragraph{Endpoints.} \emph{Mechanistic:} distribution of the
+speak-margin proxy at first speak ($\Delta b_{\text{init}}$),
+comparing \textsc{pas} with direct-init. \emph{User-reported:}
+conversation success, awkwardness, and naturalness on 7-point
+Likert scales. \emph{Deployment:} risk-posture sweep on
+\textsc{pas} without retraining perception.
 
-\paragraph{Falsifiers.}
-Even before numbers arrive, the framing is testable:
-if PAS and direct-init produce indistinguishable margin distributions, the
-architectural split adds little;
-if awkwardness does not covary with margin alignment, felt social safety may
-require metrics beyond timing proxies \citep{tian2021socialerrors};
-if risk-posture settings do not monotonically trade initiation rate for margin,
-deployment-time authorization is not a viable safety dial.
-A single-site study cannot certify generalist-robot safety; it can only show
-that initiation authorization is \emph{measurable and manipulable}---enough, we
-hope, to motivate the community benchmarks in Section~\ref{sec:open}.
+\paragraph{Falsifiers.} The framing is testable: if \textsc{pas} and
+direct-init produce indistinguishable margin distributions, the
+architectural split adds little.
+If awkwardness does not track margin alignment, felt safety likely
+needs metrics beyond timing proxies
+\citep{tian2021socialerrors}.
+If risk-posture settings do not monotonically trade initiation rate
+against margin, deployment-time authorization is not a viable safety
+dial.
+The study measures whether initiation authorization is manipulable
+and whether margin distributions differ across policy classes.

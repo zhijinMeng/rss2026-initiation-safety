@@ -1,136 +1,153 @@
-\label{sec:taxonomy}
 
-\subsection{Taxonomy Placement}
+\subsection{Where Initiation Fits}
+\label{sec:placement}
 
-Physical safety (collision, force, joint limits) remains necessary
-\citep{akalin2021,zhang2025safevla,kojima2025fmr}.
-Cyber and privacy safety (data leakage, jailbreak prompting) are increasingly
-salient for foundation-model robots \citep{robey2024jailbreaking,bai2022constitutional}.
-For robots that initiate contact in public or domestic space, we argue that
-\textbf{social-interaction safety} must be explicit---and that
-\textbf{initiation authorization} is a critical subclass within it.
-\begin{center}
-\scriptsize
-\setlength{\tabcolsep}{3pt}
-\begin{tabular}{@{}l p{0.30\linewidth} p{0.30\linewidth}@{}}
+Physical safety---collisions, forces, joint limits---remains
+necessary
+\citep{akalin2021,zhang2025safevla,kojima2025fmr}, and cyber and
+privacy safety---data leakage, jailbreak prompting---are also relevant
+for foundation-model robots
+\citep{robey2024jailbreaking,bai2022constitutional}. Beyond these,
+robots that initiate contact in public or domestic spaces face a third
+question: whether to act at all.
+
+HRI already distinguishes physical from perceived safety
+\citep{akalin2021,weiss2023perceived}, and social-error taxonomies
+list what goes wrong once interaction is already underway
+\citep{tian2021socialerrors}. What is missing is a layer for the
+earlier decision of whether the robot should start in the first place
+\citep{shi2011spatial,edirisinghe2024shopworker}. We call this layer
+\emph{initiation authorization} and place it as a critical subclass of
+social-interaction safety.
+
+\begin{table}[H]
+\footnotesize
+\centering
+\caption{Safety classes for generalist robots.}
+\label{tab:taxonomy}
+\begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}>{\raggedright\arraybackslash}p{0.21\columnwidth}>{\raggedright\arraybackslash}p{0.37\columnwidth}>{\raggedright\arraybackslash}p{0.26\columnwidth}@{}}
 \toprule
-\textbf{Class} & \textbf{Typical metric} & \textbf{Example failure} \\
+\textbf{Class} & \textbf{Safety focus} & \textbf{Example failure} \\
 \midrule
 Physical & Contact force, clearance & Unintended touch \\
+\midrule
 Cyber / privacy & Access control, PII & Leaked session data \\
-\textbf{Social-interaction} & Felt safety, norms & Interrupt, pressure \\
-\;\;$\hookrightarrow$ \textbf{Initiation} & Timing, addressee & \textbf{Premature commit} \\
+\midrule
+Social-interaction & Felt safety, norms & Interrupt, pressure \\
+\midrule
+\quad$\hookrightarrow$ Initiation & When to act, whom to address & Premature commitment \\
 \bottomrule
-\end{tabular}
-\end{center}
+\end{tabular*}
+\end{table}
 
-\noindent
-HRI research distinguishes \emph{physical} from \emph{perceived} safety
-\citep{akalin2021,weiss2023perceived}; social-error taxonomies catalog
-socio-affective failures \citep{tian2021socialerrors}, yet rarely specify an
-explicit \textbf{authorization layer} before the first commitment
-\citep{shi2011spatial,edirisinghe2024shopworker}.
-Initiation authorization is a \emph{decision-layer} concern---a
-\textbf{pre-interaction safety layer} added to that lineage.
+Initiation also spans more than speech. On talking platforms the first
+commitment is often a word. On manipulation-centric VLAs it can be
+the first grasp of a contested object, an uninvited entry into
+personal space, or a clarifying question that cuts across a human
+conversation \citep{rt2-2023,openvla-2024,huang2016anticipatory}.
+What matters is \emph{irreversibility under uncertainty, not the
+modality}. Generalist safety also depends on context, intent, and
+human expectation, not on constraint enforcement alone.
+Table~\ref{tab:themes} maps these themes to initiation decisions.
 
-\paragraph{Beyond speech.}
-On speech-capable platforms the commitment may be the first word; on
-manipulation-centric VLAs it may be the first grasp of a contested object, an
-uninvited approach into personal space, or a clarifying utterance that interrupts
-a human--human exchange \citep{rt2-2023,openvla-2024,huang2016anticipatory}.
-The common structure is \emph{irreversibility under uncertainty}, not modality.
-
-\subsection{Workshop Themes and Generalist Assumptions}
-
-The workshop overview stresses that safety depends on context, intent, and human
-expectation rather than constraint enforcement alone.
-Table~\ref{tab:workshop-map} translates those examples to initiation.
-
-Specialist deployments embed assumptions that generalist robots cannot rely on:
-\textbf{(i)}~one threshold $\theta$ for all users;
-\textbf{(ii)}~engagement score as a proxy for intent without probe responses
-\citep{salam2017};
-\textbf{(iii)}~symmetric treatment of false act and false wait; and
-\textbf{(iv)}~static scripts across venues.
-Generalists need \emph{parametric} authorization: venue- and user-specific risk
-posture without retraining the entire VLA stack \citep{liu2025embodied}.
-Table~\ref{tab:specialist} contrasts specialist and generalist settings.
-
-\begin{table}[t]
+\begin{table}[H]
+\small
 \centering
-\scriptsize
-\setlength{\tabcolsep}{2pt}
+\caption{Safety themes mapped to pre-commitment initiation.}
+\label{tab:themes}
+\begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}>{\raggedright\arraybackslash}p{0.32\columnwidth}>{\raggedright\arraybackslash}p{0.62\columnwidth}@{}}
+\toprule
+\textbf{Theme} & \textbf{Initiation analogue} \\
+\midrule
+Context (egg/knife) & Same \textsc{speak}/reach OK in demo, intrusive at home \\
+\midrule
+Intent & ``Looking at robot'' $\neq$ willing to be addressed \\
+\midrule
+Preference & Bold greeting vs.\ privacy-seeking visitor \\
+\midrule
+Asymmetric harm & Awkward interrupt vs.\ missed visitor \\
+\midrule
+FM / data risk & Who may speak, act, log, or adapt from traces \\
+\bottomrule
+\end{tabular*}
+\end{table}
+
+\FloatBarrier
+
+\subsection{From Specialist to Generalist Safety}
+
+Specialist deployments embed assumptions that generalists cannot
+inherit: (i) one threshold $\theta$ works for everyone,
+(ii) an engagement score reveals intent without any probe response
+\citep{salam2017},
+(iii) speaking too soon and waiting too long are symmetric mistakes, and
+(iv) the same script applies across all venues. Generalists need
+\emph{parametric authorization}: a per-venue and per-user dial on risk
+posture that does not require retraining the whole VLA stack
+\citep{liu2025embodied}. Table~\ref{tab:specialist} contrasts the two
+regimes.
+
+\begin{table}[H]
+\small
+\centering
 \caption{Specialist vs.\ generalist safety assumptions.}
 \label{tab:specialist}
-\begin{tabular}{@{}l p{0.34\linewidth} p{0.34\linewidth}@{}}
+\begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}lll@{}}
 \toprule
  & \textbf{Specialist} & \textbf{Generalist} \\
 \midrule
 Harm model & Workspace, force & Norms, timing \\
+\midrule
 Observable state & Geometry & Latent receptivity \\
-Safe action & Stay in envelope & Sometimes \emph{refrain} \\
+\midrule
+Safe action & Stay in envelope & Sometimes refrain \\
+\midrule
 Tuning & Calibrate once & Per-venue dial \\
 \bottomrule
-\end{tabular}
+\end{tabular*}
 \end{table}
 
-\begin{table}[t]
-\centering
-\scriptsize
-\setlength{\tabcolsep}{2pt}
-\caption{Workshop safety themes mapped to pre-commitment initiation.}
-\label{tab:workshop-map}
-\begin{tabular}{@{}p{0.22\linewidth} p{0.72\linewidth}@{}}
-\toprule
-\textbf{Theme} & \textbf{Initiation analogue} \\
-\midrule
-Context (egg/knife) & Same \texttt{SPEAK}/reach OK in demo, intrusive at home \\
-Intent & ``Looking at robot'' $\neq$ willing to be addressed \\
-Preference & Bold greeting vs.\ privacy-seeking visitor \\
-Asymmetric harm & Awkward interrupt vs.\ missed visitor \\
-FM / data risk & Who may speak, act, log, or adapt from traces \\
-\bottomrule
-\end{tabular}
-\end{table}
+\subsection{Layered Safety and Adjacent Literatures}
 
-\subsection{Layered Safety and Literature Boundaries}
+If specialist assumptions fail, a single safety layer is also
+insufficient. A unified picture has three shields, not one.
+Physical shields and shielding-aware motion planning
+\citep{hu2022sharp} handle contact risk.
+VLA alignment \citep{zhang2025safevla,kojima2025fmr} constrains
+plans once acting is allowed.
+An \emph{initiation shield} \citep{ravichandran2025roboguard} sits
+before the first irreversible social commitment.
+Recent FMR guardrails reduce unsafe plans and resist jailbreaks, but
+they assume the robot is already permitted to attempt the commanded
+action. They do not decide whether the social channel should be opened
+\citep{kojima2025fmr,ravichandran2025roboguard,robey2024jailbreaking}.
+We now distinguish initiation authorization from three adjacent
+literatures.
 
-Unification may require \emph{layered} safety: physical shields and
-shielding-aware motion planning \citep{hu2022sharp}; VLA alignment
-\citep{zhang2025safevla,kojima2025fmr}; and \textbf{initiation shields}
-\citep{ravichandran2025roboguard} added \emph{before} the first irreversible
-social commitment.
-Recent FMR guardrails reduce unsafe \emph{plans} and jailbroken commands, but
-typically assume the robot is already authorized to attempt the commanded
-action---they do not resolve whether the robot should open the social channel in
-the first place \citep{kojima2025fmr,ravichandran2025roboguard,robey2024jailbreaking}.
+\paragraph{vs.\ physical safety and VLA guardrails.} Collision
+avoidance and SafeVLA-style constraints ask: will the motion harm
+someone? \citep{zhang2025safevla} Initiation authorization asks:
+should the robot make an irreversible social commitment now? A
+collision-free robot can still be socially harmful. A near-miss
+with a knife is the physical analogue
+\citep{akalin2021}.
 
-\paragraph{Why this is a safety paper, not engagement.}
-Reviewers may ask whether we merely relabel proactive HRI
+\paragraph{vs.\ preference alignment and LLM safety.} Preference
+alignment shapes what a model says or does after a channel is open
+\citep{bai2022constitutional}. Embodied cold-start differs:
+low-cost probes change the human's state.
+Harm is social and bidirectional, and the irreversible commitment
+precedes any human correction. Red-teaming a dialogue model does not
+substitute for probe--response dynamics on a physical robot
+\citep{robey2024jailbreaking}.
+
+\paragraph{vs.\ engagement and proactive HRI.} Proactive-robot
+research studies \emph{how} to initiate well---timing, position,
+naturalness
 \citep{broek2024proactive,hoffman2007anticipatory,shi2011spatial,bergstrom2008encounters}.
-Proactive-robot research studies \emph{how} to initiate efficiently---timing,
-position, and naturalness; we study \emph{whether} initiative is permitted under
-uncertainty.
-
-\paragraph{vs.\ physical safety and VLA guardrails.}
-Collision avoidance and SafeVLA-style constraints answer: \emph{Will the motion
-harm someone?} \citep{zhang2025safevla}
-Initiation authorization answers: \emph{Should the robot commit an irreversible
-social act now?}
-A robot can be collision-free yet socially harmful---the workshop's knife
-near-miss is the physical analogue \citep{akalin2021}.
-
-\paragraph{vs.\ preference alignment.}
-Preference alignment optimizes \emph{what} a model says or does \emph{after} a
-channel is open \citep{bai2022constitutional}.
-Embodied cold-start differs: low-cost probes change human state, harm is social
-and bidirectional, and irreversible commitment precedes correction.
-Red-teaming a dialogue model does not substitute for probe--response dynamics on
-a physical robot \citep{robey2024jailbreaking}.
-
-\paragraph{vs.\ engagement engineering.}
-Engagement scores optimize interaction quality \citep{rich2010,salam2017}; they
-do not constitute consent.
-Safety research must allow \textbf{refraining} from interaction when evidence is
-insufficient; an engagement-optimal policy may speak or act early, an
-initiation-safe policy may not.
+Engagement metrics maximize interaction quality
+\citep{rich2010,salam2017}. We study \emph{whether} initiating is
+permitted under uncertainty. Engagement scores do not constitute
+consent. A safety policy must allow refraining when evidence is thin.
+An engagement-optimal policy may act early. An initiation-safe one may
+not.

@@ -1,8 +1,9 @@
+% !TeX program = pdflatex
+% !TeX encoding = UTF-8
 % RSS 2026 Workshop — Rethinking Safety for Generalist Robots
-% CFP: 4 pages + references (4+n); RSS template; non-archival; poster required
-% Before OpenReview upload: switch header.tex to official RSS template;
-%   append Paper ID to title per template instructions.
 % Compile: pdflatex main && bibtex main && pdflatex main && pdflatex main
+
+\documentclass[10pt,twocolumn,letterpaper]{article}
 
 \input{text/header}
 
@@ -20,18 +21,23 @@ Generalist-Robot Safety}
 \end{abstract}
 
 \section{Introduction}
+\label{sec:intro}
 \input{text/introduction}
 
 \section{Initiation Authorization in Generalist-Robot Safety}
+\label{sec:taxonomy}
 \input{text/taxonomy}
 
 \section{PAS Sketch and Evaluation Protocol}
+\label{sec:pas}
 \input{text/pas}
 
-\section{Open Questions and Provisional Statements}
+\section{Open Questions and Statements}
+\label{sec:discussion}
 \input{text/open_questions}
 
 \section{Conclusion}
+\label{sec:conclusion}
 \input{text/conclusion}
 
 \clearpage
