@@ -66,15 +66,27 @@
   node[midway, above=1pt, font=\tiny, text=MenTeal] {policy};
 
 \fill[MenSlateLight, rounded corners=2pt, draw=MenSlate!18, line width=0.5pt]
-  (0.05,-0.02) rectangle (11.0,0.28);
-\node[font=\tiny, text width=10.8cm, align=center] at (5.52,0.13) {%
-  \textbf{Workshop lens:} safety requires context, intent, and preference---not
-  only collision-free motion. The harmful act is often the \textbf{first
-  irreversible commitment}.%
+  (0.05,-0.08) rectangle (11.0,0.30);
+\node[font=\tiny, align=center, inner sep=0pt] at (5.52,0.11) {%
+  \textbf{Generalist safety} needs context and preference---harm begins at the \textbf{first irreversible commitment}.%
 };
 \end{tikzpicture}%
 }
-\caption{Initiation authorization: passive thresholds vs.\ probe--authorize--speak.
-Collision-free motion does not imply safe initiation.}
-\label{fig:teaser}
+\caption{Initiation authorization under uncertainty (left to right).
+\textbf{Social context} gives ambiguous cues---a busy phone call, an unclear
+glance, a gaze suitable for probing, or a wrong addressee---while many
+deployed stacks still use a \emph{passive threshold}
+($\texttt{speak} \Leftrightarrow e_t>\theta$) that treats an engagement score
+as permission to speak.
+\textbf{Safety-by-practice} (\textsc{pas}) instead runs reversible
+\emph{probes} that never emit \texttt{speak}, accumulates receptivity
+\emph{evidence}, and opens an authorization \emph{gate} as the sole path to
+first speech.
+\textbf{Outcomes} contrast a passive premature greeting (``Hi!'' $\rightarrow$
+awkward) with an authorized sequence (probe $\rightarrow$ ``May I help?''
+$\rightarrow$ acceptable).
+Arrows mark how context supplies evidence and how policy selects the outcome.
+The figure's point is not collision avoidance: a collision-free robot can still
+harm a person with its first social commitment.}
+\label{fig:initiation}
 \end{figure*}

@@ -7,4 +7,5 @@
 *.synctex.gz
 *.fdb_latexmk
 *.fls
+output.pdf
 potential_references/
