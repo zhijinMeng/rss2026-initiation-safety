@@ -1,0 +1,59 @@
+\label{sec:intro}
+
+\textbf{Position paper.}
+This non-archival submission responds to the Rethinking Safety workshop call
+for forward-thinking perspectives---not a complete systems paper.
+Our \textbf{core claim} is:
+\begin{quote}
+\small
+\emph{Generalist-robot safety must include initiation authorization: deciding
+whether a robot may commit its first irreversible social act under uncertainty.}
+\end{quote}
+\noindent
+Initiation is not engagement; it is authorization under partial observability
+\citep{rich2010,salam2017,broek2024proactive,shi2011spatial}.
+We are \emph{not} proposing a new collision checker, VLA policy, or dialogue
+model.
+
+\paragraph{The conceptual gap.}
+Three safety layers are often conflated:
+\textbf{physical safety} constrains motion \citep{zhang2025safevla,kojima2025fmr};
+\textbf{social-interaction safety} governs quality and norms \emph{during}
+contact \citep{akalin2021,weiss2023perceived,tian2021socialerrors};
+\textbf{initiation authorization}---largely missing from reference
+architectures---governs whether to open the channel at all.
+The workshop's context-dependent knife/egg examples show that ``safe'' depends
+on context and preference; the same structure applies beyond reception robots:
+a spoken greeting can interrupt a phone call \citep{edirisinghe2024shopworker};
+a home generalist can speak over a human conversation; a VLA can reach for a
+contested object before assent \citep{rt2-2023,openvla-2024,black2024pi0};
+jailbroken planners can authorize harmful \emph{first moves} as readily as
+harmful first words \citep{robey2024jailbreaking,ravichandran2025roboguard}.
+
+Most deployed stacks nevertheless implement initiation as a fixed threshold,
+$\texttt{ACT/SPEAK} \Leftrightarrow e_t > \theta$ \citep{bohus2014}---treating
+engagement score or a single VLA rollout as social permission without context,
+preference, or bidirectional evidence from low-cost probes
+\citep{skantze2014speech,vasquez2014,bohus2014}.
+Figure~\ref{fig:teaser} contrasts this pattern with initiation safety as
+\emph{safety-by-practice}: reversible probes before irreversible commitment,
+explicit preference, and runtime shields before foundation-model dialogue.
+
+\input{text/figure1}
+
+\paragraph{Contributions.}
+\begin{enumerate}\setlength{\itemsep}{1pt}
+  \item \textbf{Taxonomy:} position initiation authorization as a critical
+  subclass of social-interaction safety---distinct from physical shields, cyber
+  risk, post-dialogue alignment \citep{bai2022constitutional}, and engagement
+  optimization.
+  \item \textbf{Framing:} relate workshop themes to pre-commitment decisions
+  under partial observability, latent receptivity, and asymmetric social costs.
+  \item \textbf{Discussion catalyst:} sketch PAS (probe--authorize--speak) on a
+  real robot, state an evaluation protocol, and pose open questions for
+  community standards (quantitative outcomes \textbf{in progress}, $n{=}90$).
+\end{enumerate}
+\noindent
+Section~\ref{sec:taxonomy} develops the taxonomy; Section~\ref{sec:pas} gives an
+illustrative sketch and protocol; Section~\ref{sec:open} poses open questions and
+provisional statements; Section~\ref{sec:conclusion} closes.
