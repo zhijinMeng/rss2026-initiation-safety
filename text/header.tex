@@ -1,0 +1,41 @@
+% Workshop submission: RSS-style two-column, 4 pages + references (4+n)
+% TODO: swap to official RSS template when uploading to OpenReview
+\documentclass[10pt,twocolumn,letterpaper]{article}
+\usepackage[margin=0.75in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{times}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{etoolbox}
+\usepackage{caption}
+\usepackage[svgnames]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{
+  positioning,arrows.meta,calc,shapes.geometric,fit,backgrounds
+}
+\definecolor{MenTeal}{RGB}{18,120,115}
+\definecolor{MenTealLight}{RGB}{220,242,240}
+\definecolor{MenCoral}{RGB}{210,85,70}
+\definecolor{MenCoralLight}{RGB}{255,236,232}
+\definecolor{MenSlate}{RGB}{72,82,96}
+\definecolor{MenSlateLight}{RGB}{244,246,249}
+\definecolor{MenGold}{RGB}{196,140,40}
+
+\captionsetup{font=small,skip=4pt}
+\setlength{\textfloatsep}{6pt plus 2pt minus 2pt}
+\setlength{\floatsep}{6pt plus 2pt minus 2pt}
+\setlength{\intextsep}{6pt plus 2pt minus 2pt}
+\setlength{\parskip}{0pt}
+\setlength{\abovedisplayskip}{4pt}
+\setlength{\belowdisplayskip}{4pt}
+
+\bibliographystyle{plainnat}
+\makeatletter
+\apptocmd{\thebibliography}{\small}{}{}
+\makeatother
