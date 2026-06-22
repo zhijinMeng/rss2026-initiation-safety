@@ -1,13 +1,12 @@
 We implement initiation authorization as \textsc{pas}
 (probe--authorize--speak) on SocialVLA-Engage. \textsc{pas} deliberately
 uses familiar HRI primitives---an engagement score, a probe FSM, and a
-threshold gate \citep{bohus2014,skantze2014speech,rich2010}. The
-contribution is architectural, not mechanistic: arranging these parts as
+threshold gate \citep{bohus2014,skantze2014speech,rich2010}, arranged as
 a safety layer with (i) a probe module structurally prevented from
 emitting \textsc{speak}, (ii) a gate threshold $\tau(\rho)$ that is a
 deploy-time dial rather than a fixed trained constant, and (iii) a
 logged margin $\Delta_{\text{init}}$ at every first-\textsc{speak}
-event. The controller runs at 10\,Hz; only the authorization gate may
+event. The controller runs at 10\,Hz. Only the authorization gate may
 release first speech, and dialogue generation runs after that point.
 
 \paragraph{Runtime split.} Each cycle has three steps.
@@ -15,8 +14,8 @@ release first speech, and dialogue generation runs after that point.
 activity, approach, and dwell into an engagement score $e_t$.
 \textbf{(2) Probe FSM} chooses a reversible nonverbal action---
 \texttt{wait}, \texttt{head\_turn}, or \texttt{body\_orient}---based on
-human cues. Stages advance with brief gaze, sustained gaze, and dwell;
-they can de-escalate if the person looks away.
+human cues. Stages advance with brief gaze, sustained gaze, and dwell,
+and they can de-escalate if the person looks away.
 The FSM never returns \texttt{speak}. Stages do not skip forward, and
 gaze loss can de-escalate:
 \begin{center}
@@ -43,13 +42,14 @@ margin $\Delta_{\text{init}} = e_t - \tau(\rho)$ at first
 \small
 \begin{algorithmic}[1]
 \State \textbf{Input:} frame, stage, $\rho$
-\State $e_t \leftarrow \text{engagement\_score}()$;\;
-  $\tau \leftarrow \tau(\rho)$
+\State $e_t \leftarrow \text{engagement\_score}()$
+\State $\tau \leftarrow \tau(\rho)$
 \State $a_t \leftarrow \text{probe\_fsm}(e_t,\text{stage})$
 \Comment{never \textsc{speak}}
 \If{$e_t \geq \tau$ \textbf{and} stage $\geq 2$}
-  \State $a_t \leftarrow$ \textsc{speak}; log $\Delta_{\text{init}} = e_t - \tau$;\;
-  run FM dialogue
+  \State $a_t \leftarrow$ \textsc{speak}
+  \State log $\Delta_{\text{init}} = e_t - \tau$
+  \State run FM dialogue
 \EndIf
 \end{algorithmic}
 \end{algorithm}
@@ -68,17 +68,17 @@ after incidents.
 
 \paragraph{What the study changes.} All conditions share the same
 humanoid, perception stack, doorway scenario, and post-initiation
-dialogue. Only the initiation layer differs:
-\textsc{pas} uses the full probe--gate split with default $\rho$;
-direct-init maps $e_t > \theta$ directly to \textsc{speak}, skipping
-probes and the gate;
-passive-wait keeps probes but uses a conservative $\rho$ so the gate
+dialogue. Only the initiation layer differs.
+\textsc{pas} uses the full probe--gate split with default $\rho$.
+Direct-init maps $e_t > \theta$ directly to \textsc{speak}, skipping
+probes and the gate.
+Passive-wait keeps probes but uses a conservative $\rho$ so the gate
 rarely opens.
 
 \paragraph{Study scenario.} Participants meet the robot at a scripted
 doorway. Each trial scripts one of three visitor states: on a phone,
 mid-conversation, or clearly open to interaction. This study
-instantiates the framing for doorway speech; reach, approach, and
+instantiates the framing for doorway speech. Reach, approach, and
 multi-party authorization are deferred to future work (\S\ref{sec:futurework}).
 Sessions log probe actions, gate state, stage, $\Delta_{\text{init}}$ at
 first \textsc{speak}, and user-reported awkwardness, success, and
