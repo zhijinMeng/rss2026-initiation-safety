@@ -16,24 +16,27 @@ activity, approach, and dwell into an engagement score $e_t$.
 At each stage the robot may only \emph{wait}, \emph{turn its head toward
 the person}, or \emph{turn its body to face the person}---never speak.
 A higher stage requires stronger signs that the person is open to
-interaction; if the person looks away, the stage can drop back.
+interaction, and the stage can drop back if the person looks away.
 In Table~\ref{tab:probe_stages}, the middle column lists what the
-person must show to \emph{enter} that stage; the right column is what
+person must show to \emph{enter} that stage, and the right column is what
 the robot does there. Speech is decided in step~(3).
-\begin{center}
-\refstepcounter{table}\label{tab:probe_stages}
+
+\begin{table}[H]
 \footnotesize
+\centering
+\caption{Probe FSM stages: entry cues and robot actions.}
+\label{tab:probe_stages}
 \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}c>{\raggedright\arraybackslash}p{0.36\columnwidth}>{\raggedright\arraybackslash}p{0.44\columnwidth}}
 \toprule
 \textbf{St.} & \textbf{To enter stage} & \textbf{Robot does} \\
 \midrule
-0 & Someone nearby & Waits; stays still \\
+0 & Someone nearby & Stays still \\
 1 & Brief eye contact & Turns head toward person \\
-2 & Sustained attention; not walking away & Turns body to face person \\
-3 & Lingers nearby & Keeps facing person; gate may allow speech \\
+2 & Sustained attention, not walking away & Turns body to face person \\
+3 & Stays nearby several seconds & Keeps facing person, gate may open \\
 \bottomrule
 \end{tabular*}
-\end{center}
+\end{table}
 \textbf{(3) Authorization gate} opens first speech only when
 $e_t \geq \tau(\rho)$ and probe stage $\geq 2$, where $\tau(\rho)$ is
 set by the venue bold/conservative dial $\rho$
