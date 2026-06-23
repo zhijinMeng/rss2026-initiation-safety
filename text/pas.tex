@@ -12,24 +12,27 @@ release first speech, and dialogue generation runs after that point.
 \paragraph{Runtime split.} Each cycle has three steps.
 \textbf{(1) Perception} tracks visible people and fuses gaze, speech
 activity, approach, and dwell into an engagement score $e_t$.
-\textbf{(2) Probe FSM} chooses a reversible nonverbal action---
-\texttt{wait}, \texttt{head\_turn}, or \texttt{body\_orient}---based on
-human cues. Stages advance with brief gaze, sustained gaze, and dwell,
-and they can de-escalate if the person looks away.
-The FSM never returns \texttt{speak}. Stages do not skip forward, and
-gaze loss can de-escalate:
+\textbf{(2) Probe FSM} moves through four stages of nonverbal signaling.
+At each stage the robot may only \emph{wait}, \emph{turn its head toward
+the person}, or \emph{turn its body to face the person}---never speak.
+A higher stage requires stronger signs that the person is open to
+interaction; if the person looks away, the stage can drop back.
+In Table~\ref{tab:probe_stages}, the middle column lists what the
+person must show to \emph{enter} that stage; the right column is what
+the robot does there. Speech is decided in step~(3).
 \begin{center}
-\small
-\begin{tabular}{cll}
+\refstepcounter{table}\label{tab:probe_stages}
+\footnotesize
+\begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}c>{\raggedright\arraybackslash}p{0.36\columnwidth}>{\raggedright\arraybackslash}p{0.44\columnwidth}}
 \toprule
-\textbf{Stage} & \textbf{Human cue} & \textbf{Probe output} \\
+\textbf{St.} & \textbf{To enter stage} & \textbf{Robot does} \\
 \midrule
-0 & person present & \texttt{wait} \\
-1 & brief gaze toward robot & \texttt{head\_turn} \\
-2 & sustained gaze + approach & \texttt{body\_orient} \\
-3 & extended dwell & \texttt{body\_orient} (hold) \\
+0 & Someone nearby & Waits; stays still \\
+1 & Brief eye contact & Turns head toward person \\
+2 & Sustained attention; not walking away & Turns body to face person \\
+3 & Lingers nearby & Keeps facing person; gate may allow speech \\
 \bottomrule
-\end{tabular}
+\end{tabular*}
 \end{center}
 \textbf{(3) Authorization gate} opens first speech only when
 $e_t \geq \tau(\rho)$ and probe stage $\geq 2$, where $\tau(\rho)$ is
