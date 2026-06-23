@@ -3,15 +3,15 @@
 \centering
 \resizebox{0.98\textwidth}{!}{%
 \begin{tikzpicture}[
-  font=\scriptsize,
+  font=\footnotesize,
   >=Stealth,
   arr/.style={-{Stealth[length=2mm,width=1.6mm]}, line width=0.9pt},
   panel/.style={rounded corners=3pt, line width=0.7pt},
-  hdr/.style={font=\footnotesize\bfseries, text=white},
-  card/.style={rounded corners=2pt, align=center, font=\tiny,
+  hdr/.style={font=\small\bfseries, text=white},
+  card/.style={rounded corners=2pt, align=center, font=\scriptsize,
     inner sep=3pt, minimum width=1.35cm, minimum height=0.7cm},
-  mod/.style={rounded corners=2pt, align=center, font=\tiny,
-    inner sep=4pt, line width=0.6pt, text width=2.5cm},
+  mod/.style={rounded corners=2pt, align=center, font=\scriptsize,
+    inner sep=4pt, line width=0.6pt, text width=2.5cm, minimum height=0.9cm},
 ]
 \def\colW{3.55}
 \def\yBot{0.35}
@@ -20,9 +20,12 @@
 \def\xA{0.05}
 \def\xB{3.75}
 \def\xC{7.45}
+\def\pasX{5.53}        % center of PAS column
+\def\pasGap{0.86}      % equal center-to-center spacing
+\def\pasYmid{1.75}    % middle module (Evidence)
 
 \fill[MenSlate, rounded corners=2pt] (0,3.72) rectangle (11.05,4.02);
-\node[font=\footnotesize\bfseries, text=white] at (5.52,3.87)
+\node[font=\small\bfseries, text=white] at (5.52,3.87)
   {Initiation authorization under uncertainty};
 
 % Col 1
@@ -35,18 +38,22 @@
 \node[card, draw=MenTeal!70, fill=MenTealLight!35] at (\xA+0.95,1.75) {gaze\\probe OK};
 \node[card, draw=MenCoral!70, fill=MenCoralLight!40] at (\xA+2.55,1.75) {wrong\\addressee};
 \fill[MenCoralLight!55, rounded corners=2pt] (\xA+0.15,0.55) rectangle (\xA+\colW-0.15,1.35);
-\node[font=\tiny\bfseries, text=MenCoral!90!black, anchor=west] at (\xA+0.25,1.18) {Passive threshold};
-\node[font=\tiny, text=MenSlate, anchor=west] at (\xA+0.25,0.82) {$\texttt{SPEAK} \Leftrightarrow e_t>\theta$};
+\node[font=\scriptsize\bfseries, text=MenCoral!90!black, anchor=west] at (\xA+0.25,1.18) {Passive threshold};
+\node[font=\scriptsize, text=MenSlate, anchor=west] at (\xA+0.25,0.82) {$\texttt{SPEAK} \Leftrightarrow e_t>\theta$};
 
 % Col 2
 \fill[MenTealLight!30, panel] (\xB,\yBot) rectangle (\xB+\colW,\yTop);
 \draw[MenTeal!50, panel] (\xB,\yBot) rectangle (\xB+\colW,\yTop);
 \fill[MenTeal!85, rounded corners=2pt] (\xB+0.1,\yHdrBot) rectangle (\xB+\colW-0.1,\yTop-0.06);
 \node[hdr, anchor=west] at (\xB+0.2,\yTop-0.22) {\textsc{pas}};
-\node[mod, draw=MenTeal!65, fill=white] (m1) at (\xB+1.78,2.55) {\textbf{Probes}\\never \texttt{speak}};
-\node[mod, draw=MenSlate!40, fill=MenSlateLight!50] (m2) at (\xB+1.78,1.85) {\textbf{Evidence}\\receptivity};
-\node[mod, draw=MenGold!75!black, fill=MenGold!6] (m3) at (\xB+1.78,1.15) {\textbf{Auth.\ gate}\\sole \texttt{speak}};
-\draw[arr, MenTeal!70] (m1) -- (m2); \draw[arr, MenTeal!70] (m2) -- (m3);
+\node[mod, draw=MenTeal!65, fill=white] (m1) at (\pasX,\pasYmid+\pasGap)
+  {\textbf{Probes}\\never \texttt{speak}};
+\node[mod, draw=MenSlate!40, fill=MenSlateLight!50] (m2) at (\pasX,\pasYmid)
+  {\textbf{Evidence}\\receptivity};
+\node[mod, draw=MenGold!75!black, fill=MenGold!6] (m3) at (\pasX,\pasYmid-\pasGap)
+  {\textbf{Auth.\ gate}\\sole \texttt{speak}};
+\draw[arr, MenTeal!70] (m1.south) -- (m2.north);
+\draw[arr, MenTeal!70] (m2.south) -- (m3.north);
 
 % Col 3
 \fill[white, panel] (\xC,\yBot) rectangle (\xC+\colW,\yTop);
@@ -54,20 +61,20 @@
 \fill[MenGold!80!black, rounded corners=2pt] (\xC+0.1,\yHdrBot) rectangle (\xC+\colW-0.1,\yTop-0.06);
 \node[hdr, anchor=west] at (\xC+0.2,\yTop-0.22) {Outcomes};
 \fill[MenCoralLight!40, rounded corners=2pt] (\xC+0.15,1.95) rectangle (\xC+\colW-0.15,3.05);
-\node[font=\tiny\bfseries, text=MenCoral!90!black, anchor=west] at (\xC+0.25,2.88) {Passive};
-\node[font=\tiny] at (\xC+1.78,2.45) {``Hi!'' $\times$ awkward};
+\node[font=\scriptsize\bfseries, text=MenCoral!90!black, anchor=west] at (\xC+0.25,2.88) {Passive};
+\node[font=\scriptsize] at (\xC+1.78,2.45) {``Hi!'' $\times$ awkward};
 \fill[MenTealLight!45, rounded corners=2pt] (\xC+0.15,0.55) rectangle (\xC+\colW-0.15,1.85);
-\node[font=\tiny\bfseries, text=MenTeal!90!black, anchor=west] at (\xC+0.25,1.68) {Authorized};
-\node[font=\tiny] at (\xC+1.78,1.15) {probe $\rightarrow$ ``May I help?'' $\checkmark$};
+\node[font=\scriptsize\bfseries, text=MenTeal!90!black, anchor=west] at (\xC+0.25,1.68) {Authorized};
+\node[font=\scriptsize] at (\xC+1.78,1.15) {probe $\rightarrow$ ``May I help?'' $\checkmark$};
 
-\draw[arr, MenSlate!50] (\xA+\colW+0.02,2.05) -- (\xB-0.02,2.05)
-  node[midway, above=1pt, font=\tiny, text=MenSlate] {evidence};
-\draw[arr, MenTeal!65] (\xB+\colW+0.02,2.05) -- (\xC-0.02,2.05)
-  node[midway, above=1pt, font=\tiny, text=MenTeal] {policy};
+\draw[arr, MenSlate!50] (\xA+\colW+0.02,\pasYmid) -- (\xB-0.02,\pasYmid)
+  node[midway, above=2pt, font=\footnotesize, text=MenSlate] {evidence};
+\draw[arr, MenTeal!65] (\xB+\colW+0.02,\pasYmid) -- (\xC-0.02,\pasYmid)
+  node[midway, above=2pt, font=\footnotesize, text=MenTeal] {policy};
 
 \fill[MenSlateLight, rounded corners=2pt, draw=MenSlate!18, line width=0.5pt]
   (0.05,-0.08) rectangle (11.0,0.30);
-\node[font=\tiny, align=center, inner sep=0pt] at (5.52,0.11) {%
+\node[font=\scriptsize, align=center, inner sep=0pt] at (5.52,0.11) {%
   \textbf{Generalist safety} needs context and user preference---harm often starts at the \textbf{first hard-to-undo act}.%
 };
 \end{tikzpicture}%
