@@ -18,7 +18,8 @@ list what goes wrong once interaction is already underway
 earlier decision of whether the robot should start in the first place
 \citep{shi2011spatial,edirisinghe2024shopworker}. We call this layer
 \emph{initiation authorization} and treat it as a key part of
-social-interaction safety.
+social-interaction safety. In Table~\ref{tab:taxonomy}, we summarize
+the safety layers for generalist robots.
 
 \begin{table}[H]
 \footnotesize
@@ -33,9 +34,11 @@ Physical & Contact force, clearance & Unintended touch \\
 \midrule
 Cyber / privacy & Access control, private data & Leaked session data \\
 \midrule
-Social-interaction & Felt safety, social norms & Interrupt, pressure \\
-\midrule
-\quad$\hookrightarrow$ Initiation & When to act, whom to address & Acting too soon \\
+Social-interaction &
+  Felt safety, social norms\newline
+  \textit{Initiation authorization} (when to act, whom to address) &
+  Interrupt, pressure\newline
+  Acting too soon \\
 \bottomrule
 \end{tabular*}
 \end{table}
@@ -46,13 +49,13 @@ the first grasp, stepping into someone's space, or a question that
 cuts into a human conversation \citep{openvla-2024}.
 What matters is whether the action is hard to take back while the
 situation is still unclear---not whether it is speech, reach, or
-approach. Table~\ref{tab:themes} maps workshop safety concerns to
+approach. In Table~\ref{tab:themes}, we map common safety concerns to
 these before-the-first-act decisions.
 
 \begin{table}[H]
 \small
 \centering
-\caption{Workshop safety themes, mapped to initiation.}
+\caption{Safety concerns mapped to initiation authorization.}
 \label{tab:themes}
 \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}>{\raggedright\arraybackslash}p{0.34\columnwidth}>{\raggedright\arraybackslash}p{0.60\columnwidth}@{}}
 \toprule
@@ -76,35 +79,40 @@ Speak, act, and log permissions & Who may speak, move, log, or learn from data \
 \subsection{From Specialist to Generalist Safety}
 
 Single-purpose robots are often built on assumptions that generalists
-cannot use: (i) one threshold $\theta$ works for everyone,
-(ii) an engagement score is enough to know intent, with no probe,
-(iii) speaking too soon and waiting too long are equally bad mistakes,
-and (iv) the same script works in every venue. Generalists need
-\emph{tunable authorization}: a per-venue and per-user setting for
-how bold or conservative to be, without retraining the whole VLA stack. Table~\ref{tab:specialist} contrasts the two
-settings.
+cannot use: (i) one engagement threshold $\theta$ works for everyone
+\citep{bohus2014,rich2010}, (ii) observable cues are enough to infer
+intent, without reversible probes
+\citep{skantze2014speech,broek2024proactive}, (iii) speaking too soon
+and waiting too long are equally bad mistakes
+\citep{shi2011spatial}, and (iv) the same initiation script works in
+every venue \citep{edirisinghe2024shopworker,akalin2021}. Generalists
+need \emph{tunable authorization}: a per-venue and per-user setting for
+how bold or conservative to be, without retraining the whole VLA stack
+\citep{harland2024adaptivealignment}. In Table~\ref{tab:specialist}, we
+summarize how these assumptions differ between fixed-task and
+generalist deployments.
 
 \begin{table}[H]
 \small
 \centering
-\caption{How specialist and generalist robots differ on safety.}
+\caption{Fixed-task vs.\ generalist robots on initiation safety.}
 \label{tab:specialist}
-\begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}>{\raggedright\arraybackslash}p{0.24\columnwidth}>{\raggedright\arraybackslash}p{0.35\columnwidth}>{\raggedright\arraybackslash}p{0.35\columnwidth}@{}}
+\begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}>{\raggedright\arraybackslash}p{0.22\columnwidth}>{\raggedright\arraybackslash}p{0.36\columnwidth}>{\raggedright\arraybackslash}p{0.36\columnwidth}@{}}
 \toprule
-\textbf{Question} & \textbf{Specialist robot} & \textbf{Generalist robot} \\
+\textbf{Dimension} & \textbf{Fixed-task robot} & \textbf{Generalist robot} \\
 \midrule
-What goes wrong? & Collisions, excess force & Broken norms, bad timing \\
+Typical failure & Collision, excess force & Social interrupt, wrong timing \\
 \midrule
-What can the robot see? & Positions and clearance & Whether the person wants contact---not directly readable \\
+What sensors show & Clearance, pose, force & Gaze and proximity; consent is not directly observable \\
 \midrule
-What counts as safe? & Stay inside motion limits & Sometimes do nothing at all \\
+When ``safe'' means acting & Stay inside motion limits & Often means waiting until evidence is stronger \\
 \midrule
-How is it tuned? & Calibrate once at deploy & Adjust per venue or user \\
+How policy is set & Calibrate once at deploy & Adjust per venue or user \\
 \bottomrule
 \end{tabular*}
 \end{table}
 
-\subsection{Layered Safety and Adjacent Literatures}
+\subsection{Layered Safety and Related Approaches}
 
 If specialist assumptions fail, one safety layer is not enough. A
 full stack needs three checks. Physical shields and motion planning

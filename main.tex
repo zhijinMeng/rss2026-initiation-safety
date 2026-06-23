@@ -1,9 +1,9 @@
 % !TeX program = pdflatex
 % !TeX encoding = UTF-8
-% RSS 2026 Workshop — Rethinking Safety for Generalist Robots
+% RSS 2026 — Rethinking Safety for Generalist Robots
 % Compile: pdflatex main && bibtex main && pdflatex main && pdflatex main
 
-\documentclass[10pt,twocolumn,letterpaper]{article}
+\documentclass[conference]{IEEEtran}
 
 \input{text/header}
 
@@ -11,9 +11,9 @@
 Generalist-Robot Safety}
 
 \input{text/author}
-\date{}
 
 \begin{document}
+
 \maketitle
 
 \begin{abstract}
@@ -40,7 +40,7 @@ Generalist-Robot Safety}
 \label{sec:conclusion}
 \input{text/conclusion}
 
-\clearpage
+\bibliographystyle{plainnat}
 \bibliography{references}
 
 \end{document}

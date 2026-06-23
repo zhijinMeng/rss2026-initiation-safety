@@ -1,11 +1,10 @@
-% Preamble for RSS 2026 workshop paper (included from main.tex)
-\usepackage[margin=0.75in]{geometry}
+% RSS 2026 position paper (IEEEtran; included from main.tex)
+\usepackage{times}
+\usepackage[numbers]{natbib}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{mathptmx}
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
-\usepackage{natbib}
 \usepackage{url}
 \usepackage{booktabs}
 \usepackage{array}
@@ -20,6 +19,8 @@
 \usetikzlibrary{
   positioning,arrows.meta,calc,shapes.geometric,fit,backgrounds
 }
+\usepackage[bookmarks=true]{hyperref}
+
 \definecolor{MenTeal}{RGB}{18,120,115}
 \definecolor{MenTealLight}{RGB}{220,242,240}
 \definecolor{MenCoral}{RGB}{210,85,70}
@@ -36,7 +37,6 @@
 \setlength{\abovedisplayskip}{4pt}
 \setlength{\belowdisplayskip}{4pt}
 
-\bibliographystyle{plainnat}
 \makeatletter
 \apptocmd{\thebibliography}{\small}{}{}
 \makeatother

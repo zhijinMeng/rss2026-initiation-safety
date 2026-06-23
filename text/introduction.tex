@@ -5,14 +5,16 @@ engagement score measures how receptive someone seems. It does not
 answer whether the robot should act when that signal is ambiguous
 \citep{rich2010,broek2024proactive,shi2011spatial}.
 
-Deployed stacks often collapse three distinct safety decisions into
+Deployed stacks often collapse two distinct safety decisions into
 one pipeline. \emph{Physical safety} limits motion---collisions,
 force, joint limits \citep{zhang2025safevla}.
 \emph{Social-interaction safety} governs how the robot behaves once
-interaction has already started
-\citep{akalin2021,tian2021socialerrors}.
-\emph{Initiation authorization} governs whether to start at all and
-is largely missing from standard designs. The harm often looks like an
+interaction has already started, including recovery when a first act
+misfires \citep{akalin2021,tian2021socialerrors,harland2025aiapology}.
+We argue for a third layer that this picture largely omits:
+\emph{initiation authorization}---whether the robot may start at all.
+Standard designs rarely treat it as a separate decision. The harm
+often looks like an
 ordinary first move: a mistimed greeting that interrupts a call
 \citep{edirisinghe2024shopworker}, or an end-to-end VLA that reaches
 for an object before the person has agreed
@@ -35,13 +37,13 @@ and runtime checks before foundation-model dialogue.
 
 Building on this distinction, we make three contributions:
 \begin{enumerate}
-\item We name \emph{initiation authorization} as a distinct safety
+\item We introduce \emph{initiation authorization} as a distinct safety
 layer, separate from physical shields, post-plan VLA guardrails,
 post-dialogue preference alignment, and engagement optimization.
-\item We sketch \textsc{pas} (probe--authorize--speak) on a physical
+\item We illustrate \textsc{pas} (probe--authorize--speak) on a physical
 robot and propose an evaluation protocol that compares three
 initiation policies and states how the framing could fail.
-\item We outline future work, pose open questions for the community,
+\item We elaborate on future work, pose open questions for the community,
 and offer provisional statements on metrics, deployment logging,
 governance, and where initiation ends and foundation-model generation
 begins.
